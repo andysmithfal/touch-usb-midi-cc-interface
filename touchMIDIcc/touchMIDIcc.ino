@@ -82,12 +82,16 @@ void loop() {
   delay(5);
 }
 
+//this function calculates the difference between resting (untouched) value
+//of the electrode and converts that into a number between 0 and 115 to send over 
+//midi 
 int calcVelocity(int rest, int current, int channel){
   int vel;
-  //double logVal = current^1.2;
-  vel = map(rest-current, 0, 100, 127, 0);
+  vel = map(rest-current, 0, 100, 115, 0);
   if(vel < 10)   vel = 10;
   
+  
+  //options to modify the exponential function per electrode
   if(channel == 11){
     vel = pow(vel,1.3);
   }else if(channel == 10){
@@ -96,8 +100,7 @@ int calcVelocity(int rest, int current, int channel){
     vel = pow(vel,1.2);
   }
   
-  
-  if(vel > 127)  vel = 127;
+  if(vel > 115)  vel = 115;
   return vel;
 }
   
